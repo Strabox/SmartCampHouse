@@ -4,31 +4,84 @@
  Author:	André
 */
 
-// the setup function runs once when you press reset or power the board
 #include "Valve.h"
-#include "GSMService.h"
+#include "GSMLibrary.h"
 
-#define VALVE_PIN 7 
-#define SIM_CARD_PIN "0000"
+#define DEBUG
 
-using namespace SerraController;
+#define HARDWARE_SERIAL_BAUD_RATE 19200
+#define LOOP_DEBUG_DELAY 2000
+#define INITIAL_DELAY 1000
 
-Service::GSMService gsmService(SIM_CARD_PIN);
+#define GSM_TX_PIN 7
+#define GSM_RX_PIN 8
+#define TANK_VALVE_OUT_PIN 11
+
+
+GSMService gsmService(GSM_TX_PIN, GSM_RX_PIN, &Serial);
+
+Valve tankValve(TANK_VALVE_OUT_PIN, "Tanque");
+
+long unsigned allowedNumbers[] = { 967865329, 967992094, 962653446, 927656383 };
 
 void setup() {
-	int test;
-	Serial.begin(9600);
-	Serial.println("Arduino Rocking Serra!");
-	Serial.println("Start connecting to GSM network...");
-	Serial.println(sizeof(test));
-	//gsmService.connect();
-	Serial.println("GSM board SUCCESSFUL connected!");
+	delay(INITIAL_DELAY);
+	Serial.begin(HARDWARE_SERIAL_BAUD_RATE);
+	Serial.println(F("Setup..."));
+	gsmService.begin(GSM_SIM900_BAUD_RATE);
+	gsmService.beginListenForSMS();
+	tankValve.begin();
+	Serial.println(F("Ready"));
 }
 
-// the loop function runs over and over again until power down or reset
 void loop() {
-	Domain::Valve tankValve(VALVE_PIN);
-	tankValve.init();
-	delay(4000);
+	#ifdef DEBUG
+	Serial.println(F("Loop Start"));
+	#endif
+	
+	SMS sms;
+	bool newSms = false;
+
+	gsmService.tryReadSMS(&sms, &newSms);
+	if (newSms) {
+
+		Serial.print("Message: ");
+		Serial.println(sms.getMessage());
+		Serial.print("Number: ");
+		Serial.println(sms.getNumber());
+
+		if (numberAllowed(sms.getNumber())) {
+			if (strcmp(sms.getMessage(), "Liga") == 0) {
+				Serial.print("Liga\n");
+				tankValve.open();
+			}
+			else if (strcmp(sms.getMessage(), "Desliga") == 0) {
+				Serial.print("Desliga\n");
+				tankValve.close();
+			}
+			else if (strcmp(sms.getMessage(), "Estado") == 0) {
+				sms.setNumber(962653446);
+				sms.setMessage("SMS a funcionar!");
+				gsmService.sendSMS(&sms);
+				gsmService.beginListenForSMS();
+			}
+		}
+	}
+
+	#ifdef DEBUG
+	Serial.println(F("Loop End"));
+	delay(LOOP_DEBUG_DELAY);
+	#endif
 }
 
+bool numberAllowed(unsigned long number) {
+	if(number == allowedNumbers[0] || 
+	   number == allowedNumbers[1] ||
+	   number == allowedNumbers[2] ||
+	   number == allowedNumbers[3]) {
+		return true;
+	}
+	else {
+		return false;
+	}
+}
