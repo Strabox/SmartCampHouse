@@ -5,7 +5,7 @@
 */
 
 #include "Valve.h"
-#include "GSMLibrary.h"
+#include <GSMLibrary.h>
 
 #define DEBUG
 
@@ -15,14 +15,12 @@
 
 #define GSM_TX_PIN 7
 #define GSM_RX_PIN 8
-#define TANK_VALVE_OUT_PIN 11
+#define TANK_VALVE_OUT_PIN 10
 
 
 GSMService gsmService(GSM_TX_PIN, GSM_RX_PIN, &Serial);
 
 Valve tankValve(TANK_VALVE_OUT_PIN, "Tanque");
-
-long unsigned allowedNumbers[] = { 967865329, 967992094, 962653446, 927656383 };
 
 void setup() {
 	delay(INITIAL_DELAY);
@@ -30,6 +28,10 @@ void setup() {
 	Serial.println(F("Setup..."));
 	gsmService.begin(GSM_SIM900_BAUD_RATE);
 	gsmService.beginListenForSMS();
+	gsmService.addAllowedNumber(967865329);
+	gsmService.addAllowedNumber(967992094);
+	gsmService.addAllowedNumber(962653446);
+	gsmService.addAllowedNumber(927656383);
 	tankValve.begin();
 	Serial.println(F("Ready"));
 }
@@ -38,50 +40,38 @@ void loop() {
 	#ifdef DEBUG
 	Serial.println(F("Loop Start"));
 	#endif
-	
-	SMS sms;
+	SMS newSMS;
 	bool newSms = false;
 
-	gsmService.tryReadSMS(&sms, &newSms);
+	gsmService.availableSMS(newSMS, newSms);
 	if (newSms) {
+		Serial.print(F("Message: "));
+		Serial.println(newSMS.getMessage());
+		Serial.print(F("Number: "));
+		Serial.println(newSMS.getNumber());
 
-		Serial.print("Message: ");
-		Serial.println(sms.getMessage());
-		Serial.print("Number: ");
-		Serial.println(sms.getNumber());
-
-		if (numberAllowed(sms.getNumber())) {
-			if (strcmp(sms.getMessage(), "Liga") == 0) {
-				Serial.print("Liga\n");
-				tankValve.open();
-			}
-			else if (strcmp(sms.getMessage(), "Desliga") == 0) {
-				Serial.print("Desliga\n");
-				tankValve.close();
-			}
-			else if (strcmp(sms.getMessage(), "Estado") == 0) {
-				sms.setNumber(962653446);
-				sms.setMessage("SMS a funcionar!");
-				gsmService.sendSMS(&sms);
-				gsmService.beginListenForSMS();
-			}
+		if (strcmp(newSMS.getMessage(), "Abre") == 0) {
+			tankValve.open();
 		}
+		else if (strcmp(newSMS.getMessage(), "Fecha") == 0) {
+			tankValve.close();
+		}
+		else if (strcmp(newSMS.getMessage(), "Estado") == 0) {
+			newSMS.setNumber(newSMS.getNumber());
+			if (tankValve.isOpen()) {
+				newSMS.setMessage("Aberto");
+			}
+			else {
+				newSMS.setMessage("Fechado");
+			}
+			gsmService.sendSMS(newSMS);
+		}
+
+		gsmService.deleteAllSMS();
 	}
 
 	#ifdef DEBUG
 	Serial.println(F("Loop End"));
 	delay(LOOP_DEBUG_DELAY);
 	#endif
-}
-
-bool numberAllowed(unsigned long number) {
-	if(number == allowedNumbers[0] || 
-	   number == allowedNumbers[1] ||
-	   number == allowedNumbers[2] ||
-	   number == allowedNumbers[3]) {
-		return true;
-	}
-	else {
-		return false;
-	}
 }

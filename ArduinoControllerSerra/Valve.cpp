@@ -12,18 +12,19 @@ Valve::Valve(uint8_t arduinoPin, const char* name) {
 
 void Valve::begin() {
 	pinMode(_arduinoPin, OUTPUT);
+	digitalWrite(_arduinoPin, HIGH);
 }
 
 void Valve::open() {
 	if (!_isOpen) {
-		digitalWrite(_arduinoPin, HIGH);
+		digitalWrite(_arduinoPin, LOW);
 		_isOpen = true;
 	}
 }
 
 void Valve::close() {
 	if (_isOpen) {
-		digitalWrite(_arduinoPin, LOW);
+		digitalWrite(_arduinoPin, HIGH);
 		_isOpen = false;
 	}
 }

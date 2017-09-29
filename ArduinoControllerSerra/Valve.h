@@ -1,4 +1,6 @@
-// Valve.h
+/*
+	Valve.h
+*/
 
 #ifndef _VALVE_h
 #define _VALVE_h
@@ -26,8 +28,6 @@ class Valve
 	public: void close();
 
 	public: bool isOpen();
-
-	public: char* toString();
 
 	public: friend Stream& operator<<(Stream &stream, const Valve &valve);
 
