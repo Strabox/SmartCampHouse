@@ -9,31 +9,27 @@
       <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
       <Extensions>h;hh;hpp;hxx;hm;inl;inc;xsd</Extensions>
     </Filter>
-    <Filter Include="Resource Files">
-      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
-      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
-    </Filter>
     <Filter Include="Header Files\Domain">
-      <UniqueIdentifier>{52bb17e4-9e9d-4b09-82d9-2aa1992113f1}</UniqueIdentifier>
+      <UniqueIdentifier>{8fedb4b2-d97c-40f6-bf3b-0ebe4dc993cc}</UniqueIdentifier>
     </Filter>
     <Filter Include="Source Files\Domain">
-      <UniqueIdentifier>{43b8c008-14e2-45cc-ac71-51eebe085b03}</UniqueIdentifier>
+      <UniqueIdentifier>{e5f9a82d-efe0-4584-a633-3622aef0c97f}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="__vm\.ArduinoControllerSerra.vsarduino.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Valve.h">
+    <ClInclude Include="TankManager.h">
       <Filter>Header Files\Domain</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Valve.cpp">
-      <Filter>Source Files\Domain</Filter>
-    </ClCompile>
+    <None Include="ArduinoControllerSerra.ino" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="ArduinoControllerSerra.ino" />
+    <ClCompile Include="TankManager.cpp">
+      <Filter>Source Files\Domain</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

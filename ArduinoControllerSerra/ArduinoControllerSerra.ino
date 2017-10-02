@@ -4,26 +4,26 @@
  Author:	André
 */
 
-#include "Valve.h"
 #include <GSMLibrary.h>
+#include "TankManager.h"
 
-#define DEBUG
-
+#define SETUP_INITIAL_DELAY 500
 #define HARDWARE_SERIAL_BAUD_RATE 19200
-#define LOOP_DEBUG_DELAY 2000
-#define INITIAL_DELAY 1000
+#define MAIN_LOOP_DELAY 2000
 
 #define GSM_TX_PIN 7
 #define GSM_RX_PIN 8
-#define TANK_VALVE_OUT_PIN 10
+#define LAMP_PIN 11
 
+using Periphericals::Relay;
+using Domain::TankManager;
 
+TankManager tankManager = TankManager();
 GSMService gsmService(GSM_TX_PIN, GSM_RX_PIN, &Serial);
-
-Valve tankValve(TANK_VALVE_OUT_PIN, "Tanque");
+Relay lamp(LAMP_PIN, "Lampada");
 
 void setup() {
-	delay(INITIAL_DELAY);
+	delay(SETUP_INITIAL_DELAY);
 	Serial.begin(HARDWARE_SERIAL_BAUD_RATE);
 	Serial.println(F("Setup..."));
 	gsmService.begin(GSM_SIM900_BAUD_RATE);
@@ -32,46 +32,35 @@ void setup() {
 	gsmService.addAllowedNumber(967992094);
 	gsmService.addAllowedNumber(962653446);
 	gsmService.addAllowedNumber(927656383);
-	tankValve.begin();
+	tankManager.begin();
 	Serial.println(F("Ready"));
 }
 
 void loop() {
-	#ifdef DEBUG
 	Serial.println(F("Loop Start"));
-	#endif
+
 	SMS newSMS;
 	bool newSms = false;
 
 	gsmService.availableSMS(newSMS, newSms);
 	if (newSms) {
-		Serial.print(F("Message: "));
-		Serial.println(newSMS.getMessage());
-		Serial.print(F("Number: "));
-		Serial.println(newSMS.getNumber());
-
 		if (strcmp(newSMS.getMessage(), "Abre") == 0) {
-			tankValve.open();
+			tankManager.open();
 		}
 		else if (strcmp(newSMS.getMessage(), "Fecha") == 0) {
-			tankValve.close();
+			tankManager.close();
 		}
 		else if (strcmp(newSMS.getMessage(), "Estado") == 0) {
+			char* tempToString = tankManager.toString();
 			newSMS.setNumber(newSMS.getNumber());
-			if (tankValve.isOpen()) {
-				newSMS.setMessage("Aberto");
-			}
-			else {
-				newSMS.setMessage("Fechado");
-			}
+			newSMS.setMessage(tempToString);
 			gsmService.sendSMS(newSMS);
+			free(tempToString);
 		}
 
 		gsmService.deleteAllSMS();
 	}
 
-	#ifdef DEBUG
 	Serial.println(F("Loop End"));
-	delay(LOOP_DEBUG_DELAY);
-	#endif
+	delay(MAIN_LOOP_DELAY);
 }
