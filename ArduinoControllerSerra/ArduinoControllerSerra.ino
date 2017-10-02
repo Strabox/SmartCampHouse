@@ -28,10 +28,6 @@ void setup() {
 	Serial.println(F("Setup..."));
 	gsmService.begin(GSM_SIM900_BAUD_RATE);
 	gsmService.beginListenForSMS();
-	gsmService.addAllowedNumber(967865329);
-	gsmService.addAllowedNumber(967992094);
-	gsmService.addAllowedNumber(962653446);
-	gsmService.addAllowedNumber(927656383);
 	tankManager.begin();
 	Serial.println(F("Ready"));
 }
