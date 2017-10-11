@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:p1="http://schemas.android.com/apk/res/android"
+    p1:layout_width="match_parent"
+    p1:layout_height="match_parent"
+    p1:id="@+id/relativeLayout1"
+    p1:gravity="center">
+    <LinearLayout
+        p1:orientation="vertical"
+        p1:layout_width="wrap_content"
+        p1:layout_height="wrap_content"
+        p1:id="@+id/linearLayout1">
+        <TextView
+            p1:text="Número do Controlador"
+            p1:textAppearance="?android:attr/textAppearanceMedium"
+            p1:layout_width="match_parent"
+            p1:layout_height="wrap_content"
+            p1:id="@+id/textView1"
+            p1:gravity="center" />
+        <EditText
+            p1:inputType="number"
+            p1:layout_width="227.7dp"
+            p1:layout_height="wrap_content"
+            p1:id="@+id/phoneNumber"
+            p1:digits="1234567890" />
+        <TextView
+            p1:text="PIN de Acesso"
+            p1:textAppearance="?android:attr/textAppearanceMedium"
+            p1:layout_width="match_parent"
+            p1:layout_height="wrap_content"
+            p1:id="@+id/textView2"
+            p1:gravity="center" />
+        <EditText
+            p1:inputType="number"
+            p1:layout_width="match_parent"
+            p1:layout_height="wrap_content"
+            p1:id="@+id/accessPinEditText" />
+    </LinearLayout>
+    <Button
+        p1:text="Submeter"
+        p1:layout_width="232.0dp"
+        p1:layout_height="wrap_content"
+        p1:layout_below="@id/linearLayout1"
+        p1:id="@+id/submitButton" />
+</RelativeLayout>

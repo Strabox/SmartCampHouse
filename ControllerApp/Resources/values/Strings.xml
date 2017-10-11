@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <!-- General -->
+  <string name="app_name">Controlador Serra</string>
+  <string name="command_sent">Commando Enviado</string>
+  <string name="command_canceled">Commando Abortado</string>
+  <string name="message_warning">Atenção!</string>
+  <!-- SMS Commands Content -->
+  <string name="sms_command_open_valve">O-V</string>
+  <string name="sms_command_close_valve">C-V</string>
+  <string name="sms_command_status_report">SR</string>
+  <string name="sms_command_open_water_pump">O-W</string>
+  <string name="sms_command_close_water_pump">C-W</string>
+  <string name="sms_command_open_lamp">O-L</string>
+  <string name="sms_command_close_lamp">C-L</string>
+  <!-- Buttons Labels -->
+  <string name="button_yes">Sim</string>
+  <string name="button_no">Não</string>
+  <string name="button_cancel">Cancelar</string>
+  <string name="button_update">Actualizar</string>
+  <string name="button_reset">Reset</string>
+  <!-- Shared Preferences Keys -->
+  <string name="setup_done">SetupDone</string>
+  <string name="controller_number">ControllerNumber</string>
+</resources>

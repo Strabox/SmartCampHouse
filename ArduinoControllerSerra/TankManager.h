@@ -7,8 +7,8 @@ TankManager.h
 #include "Relay.h"
 #include "DistanceMeter.h"
 
-#define DM_TRIGGER_PIN 1
-#define DM_ECHO_PIN 2
+#define ULTRASONIC_TRIGGER_PIN 1
+#define ULTRASONIC_ECHO_PIN 2
 
 #define TANK_VALVE_PIN 10
 #define WATER_PUMP_PIN 12
@@ -17,6 +17,9 @@ TankManager.h
 #define TANK_HEIGHT_CM 200 
 
 #define TIMEOUT_FOR_TEN_PERCENT 600000 // 10 minutes
+
+#define VALVE_NAME "Valve"
+#define WATER_PUMP_NAME "WaterPump"
 
 namespace Domain {
 
@@ -28,9 +31,9 @@ namespace Domain {
 
 		private:
 
-		Relay valve = Relay(TANK_VALVE_PIN, "Valvula");
-		Relay waterPump = Relay(WATER_PUMP_PIN, "Bomba");
-		DistanceMeter dm = DistanceMeter(DM_TRIGGER_PIN, DM_ECHO_PIN);
+		Relay valve = Relay(TANK_VALVE_PIN, VALVE_NAME);
+		Relay waterPump = Relay(WATER_PUMP_PIN, WATER_PUMP_NAME);
+		DistanceMeter dm = DistanceMeter(ULTRASONIC_TRIGGER_PIN, ULTRASONIC_ECHO_PIN);
 
 		/* Last time we started checking for water pump function (Milliseconds) */
 		unsigned long _lastTimeWaterPumpCheck;
@@ -69,7 +72,7 @@ namespace Domain {
 
 		void checkWaterPumpStatus();
 
-		unsigned int getTankCapacity();
+		unsigned int getTankCapacity() const;
 
 	};
 

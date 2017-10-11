@@ -25,7 +25,7 @@ namespace Periphericals {
 
 	void Relay::end() {
 		if (_isInitialized) {
-			_isOpen = false;
+			close();
 			_isInitialized = false;
 		}
 	}
@@ -43,7 +43,7 @@ namespace Periphericals {
 	}
 
 	void Relay::close() {
-		if (_isInitialized &&_isOpen) {
+		if (_isInitialized && _isOpen) {
 			if (digitalRead(_arduinoPin) == HIGH) {
 				digitalWrite(_arduinoPin, LOW);
 			}
@@ -59,16 +59,17 @@ namespace Periphericals {
 	}
 
 	char* Relay::toString() const {
+		const char* delimiter = ":";
 		char* res = NULL;
 		unsigned int resSize = 0;
 		if (isOpen()) {
-			resSize = strlen(_name) + strlen(": ") + strlen(OPEN_STRING) + 1;
+			resSize = strlen(_name) + strlen(delimiter) + strlen(OPEN_STRING) + 1;
 			res = (char*)malloc(sizeof(char) * resSize);
-			snprintf(res, resSize, "%s: %s", _name, OPEN_STRING);
+			snprintf(res, resSize, "%s%s%s", _name, delimiter, OPEN_STRING);
 		} else {
-			resSize = strlen(_name) + strlen(": ") + strlen(CLOSED_STRING) + 1;
+			resSize = strlen(_name) + strlen(delimiter) + strlen(CLOSED_STRING) + 1;
 			res = (char*)malloc(sizeof(char) * resSize);
-			snprintf(res, resSize, "%s: %s", _name, CLOSED_STRING);
+			snprintf(res, resSize, "%s%s%s", _name, delimiter, CLOSED_STRING);
 		}
 		return res;
 	}

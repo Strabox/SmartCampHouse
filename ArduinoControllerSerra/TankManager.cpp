@@ -36,9 +36,9 @@ namespace Domain {
 		char* valveString = valve.toString();
 		char* waterPumpString = waterPump.toString();
 		char* res = NULL;
-		size_t resSize = strlen(valveString) + strlen(waterPumpString) + 1;
+		size_t resSize = strlen(valveString) + strlen(waterPumpString) + 2;
 		res = (char*)malloc(sizeof(char) * resSize);
-		snprintf(res, resSize, "%s|%s", valveString, waterPumpString);
+		snprintf(res, resSize, "%s\n%s\n%s%u", valveString, waterPumpString, "Capacity:", getTankCapacity());
 		free(valveString);
 		free(waterPumpString);
 		return res;
@@ -106,7 +106,7 @@ namespace Domain {
 		}
 	}
 
-	unsigned int TankManager::getTankCapacity() {
+	unsigned int TankManager::getTankCapacity() const {
 		float distanceToTop = TANK_HEIGHT_CM - (dm.getDistance() - ULTRASONIC_SENSOR_HEIGHT_CM);
 		int tempCapacity = ((TANK_HEIGHT_CM - distanceToTop) / TANK_HEIGHT_CM) * 100;
 		if (tempCapacity <= 0) {

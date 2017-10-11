@@ -81,8 +81,9 @@ namespace Periphericals {
 	}
 
 	char* DistanceMeter::toString() const {
-		//TODO
-		return "";
+		char* res = (char*)malloc(sizeof(char)*25);
+		snprintf(res, 25, "Distance:%.3f", _distance);
+		return res;
 	}
 
 	#pragma region Private Methods

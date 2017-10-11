@@ -1,0 +1,192 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:p1="http://schemas.android.com/apk/res/android"
+    p1:orientation="vertical"
+    p1:layout_width="match_parent"
+    p1:layout_height="match_parent"
+    p1:id="@+id/linearLayout1"
+    p1:gravity="top">
+    <TextView
+        p1:text="Estado do Sistema"
+        p1:textAppearance="?android:attr/textAppearanceLarge"
+        p1:layout_width="match_parent"
+        p1:layout_height="wrap_content"
+        p1:id="@+id/textView1"
+        p1:gravity="center" />
+    <TableLayout
+        p1:minWidth="25px"
+        p1:minHeight="25px"
+        p1:layout_width="match_parent"
+        p1:layout_height="wrap_content"
+        p1:id="@+id/tableLayout1"
+        p1:gravity="top">
+        <TableRow
+            p1:id="@+id/tableRow1">
+            <TextView
+                p1:text="Última Actualização:"
+                p1:textAppearance="?android:attr/textAppearanceMedium"
+                p1:layout_column="0"
+                p1:id="@+id/textView21"
+                p1:layout_width="190.0dp"
+                p1:gravity="right" />
+            <TextView
+                p1:text="N/A"
+                p1:textAppearance="?android:attr/textAppearanceMedium"
+                p1:layout_column="1"
+                p1:id="@+id/labelLastUpdate"
+                p1:layout_width="190.5dp" />
+        </TableRow>
+        <TableRow
+            p1:id="@+id/tableRow2">
+            <TextView
+                p1:text="Valvula:"
+                p1:textAppearance="?android:attr/textAppearanceMedium"
+                p1:layout_column="0"
+                p1:id="@+id/textView23"
+                p1:gravity="right" />
+            <TextView
+                p1:text="N/A"
+                p1:textAppearance="?android:attr/textAppearanceMedium"
+                p1:layout_column="1"
+                p1:id="@+id/labelValve" />
+        </TableRow>
+        <TableRow
+            p1:id="@+id/tableRow3">
+            <TextView
+                p1:text="Bomba de Água:"
+                p1:textAppearance="?android:attr/textAppearanceMedium"
+                p1:layout_column="0"
+                p1:id="@+id/textView25"
+                p1:gravity="right" />
+            <TextView
+                p1:text="N/A"
+                p1:textAppearance="?android:attr/textAppearanceMedium"
+                p1:layout_column="1"
+                p1:id="@+id/labelWaterPump" />
+        </TableRow>
+        <TableRow
+            p1:id="@+id/tableRow7"
+            p1:layout_height="wrap_content"
+            p1:layout_width="match_parent">
+            <TextView
+                p1:text="Tanque:"
+                p1:textAppearance="?android:attr/textAppearanceMedium"
+                p1:layout_column="0"
+                p1:id="@+id/textView29"
+                p1:layout_width="wrap_content"
+                p1:layout_height="19.7dp"
+                p1:gravity="right" />
+            <ProgressBar
+                style="?android:attr/progressBarStyleHorizontal"
+                p1:layout_column="1"
+                p1:id="@+id/tankBar"
+                p1:layout_width="match_parent"
+                p1:layout_height="21.0dp"
+                p1:scaleY="4"
+                p1:layout_marginRight="41.3dp" />
+        </TableRow>
+        <TableRow
+            p1:id="@+id/tableRow8">
+            <TextView
+                p1:text="Lâmpada:"
+                p1:textAppearance="?android:attr/textAppearanceMedium"
+                p1:layout_column="0"
+                p1:id="@+id/textView32"
+                p1:gravity="right" />
+            <TextView
+                p1:text="N/A"
+                p1:textAppearance="?android:attr/textAppearanceMedium"
+                p1:layout_column="1"
+                p1:id="@+id/labelLamp" />
+        </TableRow>
+    </TableLayout>
+    <TextView
+        p1:text="Controlo de Comandos"
+        p1:textAppearance="?android:attr/textAppearanceLarge"
+        p1:layout_width="match_parent"
+        p1:layout_height="wrap_content"
+        p1:id="@+id/textView11"
+        p1:gravity="center" />
+    <TableLayout
+        p1:minWidth="25px"
+        p1:minHeight="25px"
+        p1:layout_width="match_parent"
+        p1:layout_height="wrap_content"
+        p1:id="@+id/tableLayout2"
+        p1:gravity="top">
+        <TableRow
+            p1:id="@+id/tableRow4">
+            <TextView
+                p1:text="Valvula:"
+                p1:textAppearance="?android:attr/textAppearanceMedium"
+                p1:layout_column="0"
+                p1:id="@+id/textView34"
+                p1:layout_width="165.0dp"
+                p1:layout_marginTop="4.0dp"
+                p1:gravity="left" />
+            <Button
+                p1:text="Abrir"
+                p1:layout_column="1"
+                p1:id="@+id/openValve"
+                p1:layout_width="95.5dp" />
+            <Button
+                p1:text="Fechar"
+                p1:layout_column="2"
+                p1:id="@+id/closeValve"
+                p1:layout_width="97.0dp"
+                p1:layout_marginRight="25.0dp" />
+        </TableRow>
+        <TableRow
+            p1:id="@+id/tableRow5">
+            <TextView
+                p1:text="Bomba de Água:"
+                p1:textAppearance="?android:attr/textAppearanceMedium"
+                p1:layout_column="0"
+                p1:id="@+id/textView35"
+                p1:gravity="left" />
+            <Button
+                p1:text="LIGAR"
+                p1:layout_column="1"
+                p1:id="@+id/turnOnPump" />
+            <Button
+                p1:text="DESLIGAR"
+                p1:layout_column="2"
+                p1:id="@+id/turnOffPump"
+                p1:layout_marginRight="24.7dp" />
+        </TableRow>
+        <TableRow
+            p1:id="@+id/tableRow6">
+            <TextView
+                p1:text="Lâmpada:"
+                p1:textAppearance="?android:attr/textAppearanceMedium"
+                p1:layout_column="0"
+                p1:id="@+id/textView36"
+                p1:gravity="left" />
+            <Button
+                p1:text="ACENDER"
+                p1:layout_column="1"
+                p1:id="@+id/turnOnLamp" />
+            <Button
+                p1:text="APAGAR"
+                p1:layout_column="2"
+                p1:id="@+id/turnOffLamp"
+                p1:layout_marginRight="23.3dp" />
+        </TableRow>
+    </TableLayout>
+    <Button
+        p1:text="Actualizar"
+        p1:layout_width="match_parent"
+        p1:layout_height="wrap_content"
+        p1:id="@+id/update" />
+    <TextView
+        p1:text="Definições"
+        p1:textAppearance="?android:attr/textAppearanceLarge"
+        p1:layout_width="match_parent"
+        p1:layout_height="wrap_content"
+        p1:id="@+id/textView37"
+        p1:gravity="center" />
+    <Button
+        p1:text="@string/button_reset"
+        p1:layout_width="match_parent"
+        p1:layout_height="wrap_content"
+        p1:id="@+id/resetButton" />
+</LinearLayout>
