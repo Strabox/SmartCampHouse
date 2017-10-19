@@ -25,23 +25,25 @@
 
 #define SMS_COMMAND_OPEN_VALVE "O-V"
 #define SMS_COMMAND_CLOSE_VALVE "C-V"
-#define SMS_COMMAND_STATUS_REPORT "SR"
 #define SMS_COMMAND_OPEN_WATER_PUMP "O-W"
 #define SMS_COMMAND_CLOSE_WATER_PUMP "C-W"
+
 #define SMS_COMMAND_OPEN_LAMP "O-L"
 #define SMS_COMMAND_CLOSE_LAMP "C-L"
+
+#define SMS_COMMAND_STATUS_REPORT "SR"
 
 #pragma endregion
 
 
 using GSMLibrary::GSMService;
 using GSMLibrary::SMS;
-using Periphericals::Relay;
+using Easyuino::RelayNamed;
 using Domain::TankManager;
 
-TankManager tankManager;
-GSMService gsmService(GSM_TX_PIN, GSM_RX_PIN, Serial);
-Relay lamp(LAMP_PIN, LAMP_NAME);
+TankManager tankManager = TankManager();
+GSMService gsmService = GSMService(GSM_TX_PIN, GSM_RX_PIN, Serial);
+RelayNamed lamp = RelayNamed(LAMP_PIN, LAMP_NAME);
 
 void setup() {
 	delay(SETUP_INITIAL_DELAY);
@@ -80,11 +82,21 @@ void loop() {
 			lamp.close();
 		}
 		else if (strcmp(newSMS.getMessage(), SMS_COMMAND_STATUS_REPORT) == 0) {
-			char* tempToString = tankManager.toString();
+			char* tankManagerString = tankManager.toString();
+			char* lampToString = lamp.toString();
+			char* messageToSend = NULL;
+			
+			size_t messageToSendSize = strlen(tankManagerString) + strlen(lampToString) + 2;
+			messageToSend = (char*)malloc(sizeof(char) * messageToSendSize);
+			snprintf(messageToSend, messageToSendSize, "%s\n%s", tankManagerString, lampToString);
+			
 			newSMS.setNumber(newSMS.getNumber());
-			newSMS.setMessage(tempToString);
+			newSMS.setMessage(messageToSend);
 			gsmService.sendSMS(newSMS);
-			free(tempToString);
+
+			free(tankManagerString);
+			free(lampToString);
+			free(messageToSend);
 		}
 
 		gsmService.deleteAllReadSMS();	// Delete the received SMS to free space in SIM Card

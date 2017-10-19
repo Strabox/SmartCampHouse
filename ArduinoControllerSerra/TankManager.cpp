@@ -2,7 +2,7 @@
 
 namespace Domain {
 
-	TankManager::TankManager() : Peripherical() {
+	TankManager::TankManager() : Device() {
 		_lastMeasureWaterPumpCheck = 0;
 		_lastTimeWaterPumpCheck = 0;
 		_waterPumpBroken = false;
@@ -32,11 +32,11 @@ namespace Domain {
 		}
 	}
 
-	char* TankManager::toString() const {
+	char* TankManager::toString() {
 		char* valveString = valve.toString();
 		char* waterPumpString = waterPump.toString();
 		char* res = NULL;
-		size_t resSize = strlen(valveString) + strlen(waterPumpString) + 2;
+		size_t resSize = strlen(valveString) + strlen(waterPumpString) + strlen("Capacity:") + 3 + 3;
 		res = (char*)malloc(sizeof(char) * resSize);
 		snprintf(res, resSize, "%s\n%s\n%s%u", valveString, waterPumpString, "Capacity:", getTankCapacity());
 		free(valveString);
@@ -77,7 +77,7 @@ namespace Domain {
 
 	void TankManager::updateCapacity() {
 		if (_isInitialized) {
-			dm.updateDistance();
+			dm.updateDistanceNonBlock();
 		}
 	}
 
@@ -106,7 +106,7 @@ namespace Domain {
 		}
 	}
 
-	unsigned int TankManager::getTankCapacity() const {
+	unsigned int TankManager::getTankCapacity() {
 		float distanceToTop = TANK_HEIGHT_CM - (dm.getDistance() - ULTRASONIC_SENSOR_HEIGHT_CM);
 		int tempCapacity = ((TANK_HEIGHT_CM - distanceToTop) / TANK_HEIGHT_CM) * 100;
 		if (tempCapacity <= 0) {

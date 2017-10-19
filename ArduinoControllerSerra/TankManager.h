@@ -4,8 +4,7 @@ TankManager.h
 #ifndef _TANK_MANAGER_h
 #define _TANK_MANAGER_h
 
-#include "Relay.h"
-#include "DistanceMeter.h"
+#include <Easyuino.h>
 
 #define ULTRASONIC_TRIGGER_PIN 1
 #define ULTRASONIC_ECHO_PIN 2
@@ -23,16 +22,16 @@ TankManager.h
 
 namespace Domain {
 
-	using Periphericals::Peripherical;
-	using Periphericals::Relay;
-	using Periphericals::DistanceMeter;
+	using Easyuino::Device;
+	using Easyuino::RelayNamed;
+	using Easyuino::DistanceMeter;
 
-	class TankManager : public Peripherical {
+	class TankManager : public Device {
 
 		private:
 
-		Relay valve = Relay(TANK_VALVE_PIN, VALVE_NAME);
-		Relay waterPump = Relay(WATER_PUMP_PIN, WATER_PUMP_NAME);
+		RelayNamed valve = RelayNamed(TANK_VALVE_PIN, VALVE_NAME);
+		RelayNamed waterPump = RelayNamed(WATER_PUMP_PIN, WATER_PUMP_NAME);
 		DistanceMeter dm = DistanceMeter(ULTRASONIC_TRIGGER_PIN, ULTRASONIC_ECHO_PIN);
 
 		/* Last time we started checking for water pump function (Milliseconds) */
@@ -54,7 +53,7 @@ namespace Domain {
 
 		void end();
 
-		char* toString() const;
+		char* toString();
 
 		void open();
 
@@ -72,7 +71,7 @@ namespace Domain {
 
 		void checkWaterPumpStatus();
 
-		unsigned int getTankCapacity() const;
+		unsigned int getTankCapacity();
 
 	};
 
