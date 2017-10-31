@@ -1,10 +1,4 @@
-﻿/*
- Name:		ArduinoControllerSerra.ino
- Created:	6/20/2017 2:26:40 PM
- Author:	André
-*/
-
-#include <Easyuino.h>
+﻿#include <Easyuino.h>
 #include "Tank.h"
 
 #pragma region Configuration Constants
@@ -78,7 +72,7 @@ void setup() {
 #endif
 
 	tank.begin();
-	gsmService.begin(GSM_DEFAULT_BAUD_RATE);
+	gsmService.begin(9600);	//TODO: Use the constant of GSMService when Easyuino is updated to 1.1.0!
 	gsmService.beginListenForSMS();
 
 #if (DEBUG) == 1

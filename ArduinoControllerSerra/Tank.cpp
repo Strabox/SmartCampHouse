@@ -2,7 +2,7 @@
 
 namespace Domain {
 
-	Tank::Tank(char* valveName, uint8_t valvePin, char* waterPumpName, uint8_t waterPumpPin,
+	Tank::Tank(const char* valveName, uint8_t valvePin, const char* waterPumpName, uint8_t waterPumpPin,
 		uint8_t ultrasonicTriggerPin, uint8_t ultrasonicEchoPin, float ultraSonicHeightCM,
 		float tankHeightCM, uint8_t maxCapacity) : Device() {
 		_valve = new RelayNamed(valvePin, valveName);

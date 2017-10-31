@@ -2,9 +2,10 @@
 
 namespace Domain {
 
-	WaterPump::WaterPump(uint8_t waterPumpPin, char* waterPumpName) : Device() {
+	WaterPump::WaterPump(uint8_t waterPumpPin, const char* waterPumpName) : Device() {
 		_waterPump = new RelayNamed(waterPumpPin, waterPumpName);
 		_isBroken = false;
+		_turnOnTimestamp = 0;
 	}
 
 	WaterPump::~WaterPump() {
@@ -29,6 +30,7 @@ namespace Domain {
 	void WaterPump::turnOn() {
 		if (_isInitialized && !_waterPump->isOn() && !_isBroken) {
 			_waterPump->turnOn();
+			_turnOnTimestamp = millis();
 		}
 	}
 
@@ -53,7 +55,8 @@ namespace Domain {
 
 	bool WaterPump::isBroken() {
 		if (_isInitialized) {
-			if (_waterPump->isOn() && false) {	//TODO: Replace false by water flow sensor check
+			if (_waterPump->isOn() && ((millis() - _turnOnTimestamp) > DELAY_TO_START_PUMPING) && false) {	//TODO: Replace false by water flow sensor check
+				turnOff();
 				_isBroken = true;
 			}
 			return _isBroken;
