@@ -8,9 +8,9 @@ before_install:
   # Download Easyuino library from github master branch
   - wget https://github.com/Strabox/Easyuino/archive/master.zip
   - unzip master.zip
+  - ls
 install:
   - ln -s master /usr/local/share/arduino/libraries/Easyuino
-  - arduino --install-library "Easyuino"
 script:
   - arduino --verify --board arduino:avr:uno $PWD/ArduinoControllerSerra/ArduinoControllerSerra.ino
 notifications:
