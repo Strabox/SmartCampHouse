@@ -10,7 +10,7 @@ before_install:
   - unzip master.zip
   - ls
 install:
-  - ln -s ./Easyuino-master /usr/local/share/arduino/libraries/Easyuino
+  - ln -s ./Easyuino-master /usr/local/share/arduino/libraries/
 script:
   - arduino --verify --board arduino:avr:uno $PWD/ArduinoControllerSerra/ArduinoControllerSerra.ino
 notifications:
