@@ -7,7 +7,7 @@ before_install:
   - sudo ln -s /usr/local/share/arduino/arduino /usr/local/bin/arduino
   # Download Easyuino library from github master branch
   - wget https://github.com/Strabox/Easyuino/archive/master.zip
-  - unzip Easyuino-master.zip
+  - tar xvf Easyuino-master.zip
 install:
   - ln -s Easyuino-master /usr/local/share/arduino/libraries/Easyuino
 script:
