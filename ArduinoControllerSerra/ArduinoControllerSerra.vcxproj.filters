@@ -20,7 +20,10 @@
     <ClInclude Include="__vm\.ArduinoControllerSerra.vsarduino.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="TankManager.h">
+    <ClInclude Include="Tank.h">
+      <Filter>Header Files\Domain</Filter>
+    </ClInclude>
+    <ClInclude Include="WaterPump.h">
       <Filter>Header Files\Domain</Filter>
     </ClInclude>
   </ItemGroup>
@@ -28,7 +31,10 @@
     <None Include="ArduinoControllerSerra.ino" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="TankManager.cpp">
+    <ClCompile Include="Tank.cpp">
+      <Filter>Source Files\Domain</Filter>
+    </ClCompile>
+    <ClCompile Include="WaterPump.cpp">
       <Filter>Source Files\Domain</Filter>
     </ClCompile>
   </ItemGroup>
