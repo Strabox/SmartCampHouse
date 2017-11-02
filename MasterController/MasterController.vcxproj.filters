@@ -17,18 +17,15 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="__vm\.ArduinoControllerSerra.vsarduino.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Tank.h">
       <Filter>Header Files\Domain</Filter>
     </ClInclude>
     <ClInclude Include="WaterPump.h">
       <Filter>Header Files\Domain</Filter>
     </ClInclude>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="ArduinoControllerSerra.ino" />
+    <ClInclude Include="__vm\.MasterController.vsarduino.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Tank.cpp">
@@ -37,5 +34,8 @@
     <ClCompile Include="WaterPump.cpp">
       <Filter>Source Files\Domain</Filter>
     </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="MasterController.ino" />
   </ItemGroup>
 </Project>

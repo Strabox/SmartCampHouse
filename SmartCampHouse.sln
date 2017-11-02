@@ -3,9 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.27004.2005
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ArduinoControllerSerra", "ArduinoControllerSerra\ArduinoControllerSerra.vcxproj", "{C5F80730-F44F-4478-BDAE-6634EFC2CA88}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ControllerApp", "ControllerApp\ControllerApp.csproj", "{976133A9-66D1-416E-9407-A2E576FD9FD2}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "TankSlaveController", "TankSlaveController\TankSlaveController.vcxproj", "{CE7D2208-F46D-443C-B3EF-662C23BF8D3D}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "MasterController", "MasterController\MasterController.vcxproj", "{C5F80730-F44F-4478-BDAE-6634EFC2CA88}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -17,14 +19,6 @@ Global
 		Release|x86 = Release|x86
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{C5F80730-F44F-4478-BDAE-6634EFC2CA88}.Debug|Any CPU.ActiveCfg = Debug|Win32
-		{C5F80730-F44F-4478-BDAE-6634EFC2CA88}.Debug|x64.ActiveCfg = Debug|Win32
-		{C5F80730-F44F-4478-BDAE-6634EFC2CA88}.Debug|x86.ActiveCfg = Debug|Win32
-		{C5F80730-F44F-4478-BDAE-6634EFC2CA88}.Debug|x86.Build.0 = Debug|Win32
-		{C5F80730-F44F-4478-BDAE-6634EFC2CA88}.Release|Any CPU.ActiveCfg = Release|Win32
-		{C5F80730-F44F-4478-BDAE-6634EFC2CA88}.Release|x64.ActiveCfg = Release|Win32
-		{C5F80730-F44F-4478-BDAE-6634EFC2CA88}.Release|x86.ActiveCfg = Release|Win32
-		{C5F80730-F44F-4478-BDAE-6634EFC2CA88}.Release|x86.Build.0 = Release|Win32
 		{976133A9-66D1-416E-9407-A2E576FD9FD2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{976133A9-66D1-416E-9407-A2E576FD9FD2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{976133A9-66D1-416E-9407-A2E576FD9FD2}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
@@ -43,6 +37,22 @@ Global
 		{976133A9-66D1-416E-9407-A2E576FD9FD2}.Release|x86.ActiveCfg = Release|Any CPU
 		{976133A9-66D1-416E-9407-A2E576FD9FD2}.Release|x86.Build.0 = Release|Any CPU
 		{976133A9-66D1-416E-9407-A2E576FD9FD2}.Release|x86.Deploy.0 = Release|Any CPU
+		{CE7D2208-F46D-443C-B3EF-662C23BF8D3D}.Debug|Any CPU.ActiveCfg = Debug|Win32
+		{CE7D2208-F46D-443C-B3EF-662C23BF8D3D}.Debug|x64.ActiveCfg = Debug|Win32
+		{CE7D2208-F46D-443C-B3EF-662C23BF8D3D}.Debug|x86.ActiveCfg = Debug|Win32
+		{CE7D2208-F46D-443C-B3EF-662C23BF8D3D}.Debug|x86.Build.0 = Debug|Win32
+		{CE7D2208-F46D-443C-B3EF-662C23BF8D3D}.Release|Any CPU.ActiveCfg = Release|Win32
+		{CE7D2208-F46D-443C-B3EF-662C23BF8D3D}.Release|x64.ActiveCfg = Release|Win32
+		{CE7D2208-F46D-443C-B3EF-662C23BF8D3D}.Release|x86.ActiveCfg = Release|Win32
+		{CE7D2208-F46D-443C-B3EF-662C23BF8D3D}.Release|x86.Build.0 = Release|Win32
+		{C5F80730-F44F-4478-BDAE-6634EFC2CA88}.Debug|Any CPU.ActiveCfg = Debug|Win32
+		{C5F80730-F44F-4478-BDAE-6634EFC2CA88}.Debug|x64.ActiveCfg = Debug|Win32
+		{C5F80730-F44F-4478-BDAE-6634EFC2CA88}.Debug|x86.ActiveCfg = Debug|Win32
+		{C5F80730-F44F-4478-BDAE-6634EFC2CA88}.Debug|x86.Build.0 = Debug|Win32
+		{C5F80730-F44F-4478-BDAE-6634EFC2CA88}.Release|Any CPU.ActiveCfg = Release|Win32
+		{C5F80730-F44F-4478-BDAE-6634EFC2CA88}.Release|x64.ActiveCfg = Release|Win32
+		{C5F80730-F44F-4478-BDAE-6634EFC2CA88}.Release|x86.ActiveCfg = Release|Win32
+		{C5F80730-F44F-4478-BDAE-6634EFC2CA88}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

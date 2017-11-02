@@ -11,9 +11,9 @@
     </ProjectConfiguration>
   </ItemGroup>
   <PropertyGroup Label="Globals">
-    <ProjectGuid>{C5F80730-F44F-4478-BDAE-6634EFC2CA88}</ProjectGuid>
-    <RootNamespace>ArduinoControllerSerra</RootNamespace>
-    <ProjectName>ArduinoControllerSerra</ProjectName>
+    <ProjectGuid>{CE7D2208-F46D-443C-B3EF-662C23BF8D3D}</ProjectGuid>
+    <RootNamespace>TankSlaveController</RootNamespace>
+    <ProjectName>TankSlaveController</ProjectName>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
@@ -34,7 +34,6 @@
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
   <ImportGroup Label="ExtensionSettings">
   </ImportGroup>
-  <ImportGroup Label="Shared" />
   <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
   </ImportGroup>
@@ -48,8 +47,8 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>$(ProjectDir)..\..\..\..\Users\André\Documents\Arduino\libraries\Easyuino\src;$(ProjectDir)..\..\..\..\Users\André\Desktop\Arduino\hardware\arduino\avr\libraries\SoftwareSerial\src;$(ProjectDir)..\..\..\..\Users\André\Desktop\Arduino\libraries;$(ProjectDir)..\..\..\..\Users\André\Desktop\Arduino\hardware\arduino\avr\libraries;$(ProjectDir)..\..\..\..\Users\André\Documents\Arduino\libraries;$(ProjectDir)..\..\..\..\Users\André\Desktop\Arduino\hardware\arduino\avr\cores\arduino;$(ProjectDir)..\..\..\..\Users\André\Desktop\Arduino\hardware\arduino\avr\variants\standard;$(ProjectDir)..\ArduinoControllerSerra;$(ProjectDir)..\..\..\..\Users\André\Desktop\Arduino\hardware\tools\avr\avr\include\;$(ProjectDir)..\..\..\..\Users\André\Desktop\Arduino\hardware\tools\avr\avr\include\avr\;$(ProjectDir)..\..\..\..\Users\André\Desktop\Arduino\hardware\tools\avr\lib\gcc\avr\4.8.1\include;$(ProjectDir)..\..\..\..\Users\André\Desktop\Arduino\hardware\tools\avr\lib\gcc\avr\4.9.2\include;$(ProjectDir)..\..\..\..\Users\André\Desktop\Arduino\hardware\tools\avr\lib\gcc\avr\4.9.3\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <ForcedIncludeFiles>$(ProjectDir)__vm\.ArduinoControllerSerra.vsarduino.h;%(ForcedIncludeFiles)</ForcedIncludeFiles>
+      <AdditionalIncludeDirectories>$(ProjectDir)..\..\..\..\Users\André\Documents\Arduino\libraries\Easyuino\src;$(ProjectDir)..\..\..\..\Users\André\Desktop\Arduino\hardware\arduino\avr\libraries\SoftwareSerial\src;$(ProjectDir)..\..\..\..\Users\André\Desktop\Arduino\libraries;$(ProjectDir)..\..\..\..\Users\André\Desktop\Arduino\hardware\arduino\avr\libraries;$(ProjectDir)..\..\..\..\Users\André\Documents\Arduino\libraries;$(ProjectDir)..\..\..\..\Users\André\Desktop\Arduino\hardware\arduino\avr\cores\arduino;$(ProjectDir)..\..\..\..\Users\André\Desktop\Arduino\hardware\arduino\avr\variants\standard;$(ProjectDir)..\TankSlaveController;$(ProjectDir)..\..\..\..\Users\André\Desktop\Arduino\hardware\tools\avr\avr\include\;$(ProjectDir)..\..\..\..\Users\André\Desktop\Arduino\hardware\tools\avr\avr\include\avr\;$(ProjectDir)..\..\..\..\Users\André\Desktop\Arduino\hardware\tools\avr\lib\gcc\avr\4.8.1\include;$(ProjectDir)..\..\..\..\Users\André\Desktop\Arduino\hardware\tools\avr\lib\gcc\avr\4.9.2\include;$(ProjectDir)..\..\..\..\Users\André\Desktop\Arduino\hardware\tools\avr\lib\gcc\avr\4.9.3\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <ForcedIncludeFiles>$(ProjectDir)__vm\.TankSlaveController.vsarduino.h;%(ForcedIncludeFiles)</ForcedIncludeFiles>
       <IgnoreStandardIncludePath>false</IgnoreStandardIncludePath>
       <PreprocessorDefinitions>__AVR_ATmega328p__;__AVR_ATmega328P__;_VMDEBUG=1;F_CPU=16000000L;ARDUINO=10800;ARDUINO_AVR_UNO;ARDUINO_ARCH_AVR;__cplusplus=201103L;_VMICRO_INTELLISENSE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
@@ -60,14 +59,10 @@
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
-      <Optimization>Disabled</Optimization>
+      <Optimization>MaxSpeed</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>$(ProjectDir)..\..\..\..\Program Files (x86)\Arduino\hardware\arduino\avr\libraries\SoftwareSerial\src;$(ProjectDir)..\..\..\..\Program Files (x86)\Arduino\libraries;$(ProjectDir)..\..\..\..\Program Files (x86)\Arduino\hardware\arduino\avr\libraries;$(ProjectDir)..\..\..\..\Users\André\Documents\Arduino\libraries;$(ProjectDir)..\..\..\..\Program Files (x86)\Arduino\hardware\arduino\avr\cores\arduino;$(ProjectDir)..\..\..\..\Program Files (x86)\Arduino\hardware\arduino\avr\variants\standard;$(ProjectDir)..\ArduinoControllerSerra;$(ProjectDir)..\..\..\..\Program Files (x86)\Arduino\hardware\tools\avr\avr\include\;$(ProjectDir)..\..\..\..\Program Files (x86)\Arduino\hardware\tools\avr\avr\include\avr\;$(ProjectDir)..\..\..\..\Program Files (x86)\Arduino\hardware\tools\avr\lib\gcc\avr\4.8.1\include;$(ProjectDir)..\..\..\..\Program Files (x86)\Arduino\hardware\tools\avr\lib\gcc\avr\4.9.2\include;$(ProjectDir)..\..\..\..\Program Files (x86)\Arduino\hardware\tools\avr\lib\gcc\avr\4.9.3\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <ForcedIncludeFiles>$(ProjectDir)__vm\.ArduinoControllerSerra.vsarduino.h;%(ForcedIncludeFiles)</ForcedIncludeFiles>
-      <WholeProgramOptimization>false</WholeProgramOptimization>
-      <PreprocessorDefinitions>__AVR_ATmega328p__;__AVR_ATmega328P__;F_CPU=16000000L;ARDUINO=10609;ARDUINO_AVR_UNO;ARDUINO_ARCH_AVR;__cplusplus=201103L;_VMICRO_INTELLISENSE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
@@ -82,25 +77,14 @@
     <DebuggerFlavor>VisualMicroDebugger</DebuggerFlavor>
   </PropertyGroup>
   <ItemGroup>
-    <None Include="ArduinoControllerSerra.ino">
+    <None Include="TankSlaveController.ino">
       <FileType>CppCode</FileType>
     </None>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Tank.h" />
-    <ClInclude Include="WaterPump.h" />
-    <ClInclude Include="__vm\.ArduinoControllerSerra.vsarduino.h" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClCompile Include="Tank.cpp" />
-    <ClCompile Include="WaterPump.cpp" />
+    <ClInclude Include="__vm\.TankSlaveController.vsarduino.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
-  <ProjectExtensions>
-    <VisualStudio>
-      <UserProperties arduino.upload.port="COM6" />
-    </VisualStudio>
-  </ProjectExtensions>
 </Project>

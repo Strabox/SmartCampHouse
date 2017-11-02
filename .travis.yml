@@ -11,7 +11,8 @@ before_install:
 install:
   - ln -s $PWD/Easyuino-master /usr/local/share/arduino/libraries/Easyuino
 script:
-  - arduino --verify --board arduino:avr:uno $PWD/ArduinoControllerSerra/ArduinoControllerSerra.ino
+  - arduino --verify --board arduino:avr:uno $PWD/MasterController/MasterController.ino
+  - arduino --verify --board arduino:avr:uno $PWD/TankSlaveController/TankSlaveController.ino
 notifications:
   email:
     on_success: change

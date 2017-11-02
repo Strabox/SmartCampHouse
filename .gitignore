@@ -246,3 +246,5 @@ ModelManifest.xml
 
 /ArduinoControllerSerra/__vm
 /TestSketches/__vm
+/MasterController/__vm
+/TankSlaveController/__vm

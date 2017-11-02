@@ -12,7 +12,7 @@ using Easyuino::Device;
 using Easyuino::RelayNamed;
 using Easyuino::DistanceMeter;
 
-#define TIMEOUT_FOR_TEN_PERCENT 600000 // 10 minutes
+//#define TIMEOUT_FOR_TEN_PERCENT 600000 // 10 minutes
 
 namespace Domain {
 

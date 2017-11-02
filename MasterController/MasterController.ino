@@ -1,13 +1,17 @@
+/*
+Name:		MasterController.ino
+Created:	11/6/2017 1:03:01 PM
+Author:	André
+*/
 #include <Easyuino.h>
 #include "Tank.h"
-
 
 #pragma region Configuration Constants
 
 // General Configurations
 
 #define DEBUG 1	//Used to control the compilation of debug instructions 0 = FALSE and 1 = TRUE
-#define HARDWARE_SERIAL_BAUD_RATE 115200
+#define USB_DEBUG_SERIAL_BAUD_RATE 115200
 #define LOOP_DELAY 500
 
 // Tank Configurations
@@ -68,12 +72,12 @@ RelayNamed lamp = RelayNamed(LAMP_PIN, LAMP_NAME);
 
 void setup() {
 #if (DEBUG) == 1
-	Serial.begin(HARDWARE_SERIAL_BAUD_RATE);
+	Serial.begin(USB_DEBUG_SERIAL_BAUD_RATE);
 	Serial.println(F("Setup..."));
 #endif
 
 	tank.begin();
-	gsmService.begin(9600);	//TODO: Use the constant of GSMService when Easyuino is updated to 1.1.0!
+	gsmService.begin(GSM_DEFAULT_BAUD_RATE);
 	gsmService.beginListenForSMS();
 
 #if (DEBUG) == 1
