@@ -9,19 +9,21 @@ WaterPump.h
 #define DELAY_TO_START_PUMPING 10000	// 10 Seconds
 
 using Easyuino::Device;
-using Easyuino::RelayNamed;
+using Easyuino::Relay;
+using Easyuino::WaterFlowSensor;
 
 namespace Domain {
 
 	class WaterPump : public Device {
 
 	private:
+		Relay* _waterPump;
+		WaterFlowSensor * _waterFlowSensor;
 		unsigned long _turnOnTimestamp;
 		bool _isBroken;
-		RelayNamed* _waterPump;
 
 	public:
-		WaterPump(uint8_t waterPumpPin, const char* waterPumpName);
+		WaterPump(uint8_t waterPumpPin, uint8_t waterFlowSensorPin);
 
 		~WaterPump();
 
@@ -38,8 +40,6 @@ namespace Domain {
 		bool isOn();
 
 		bool isBroken();
-
-		char* toString();
 
 	};
 

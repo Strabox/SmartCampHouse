@@ -48,7 +48,7 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>$(ProjectDir)..\..\..\..\Users\André\Documents\Arduino\libraries\Easyuino\src;$(ProjectDir)..\..\..\..\Users\André\Desktop\Arduino\hardware\arduino\avr\libraries\SoftwareSerial\src;$(ProjectDir)..\..\..\..\Users\André\Desktop\Arduino\libraries;$(ProjectDir)..\..\..\..\Users\André\Desktop\Arduino\hardware\arduino\avr\libraries;$(ProjectDir)..\..\..\..\Users\André\Documents\Arduino\libraries;$(ProjectDir)..\..\..\..\Users\André\Desktop\Arduino\hardware\arduino\avr\cores\arduino;$(ProjectDir)..\..\..\..\Users\André\Desktop\Arduino\hardware\arduino\avr\variants\standard;$(ProjectDir)..\MasterController;$(ProjectDir)..\..\..\..\Users\André\Desktop\Arduino\hardware\tools\avr\avr\include\;$(ProjectDir)..\..\..\..\Users\André\Desktop\Arduino\hardware\tools\avr\avr\include\avr\;$(ProjectDir)..\..\..\..\Users\André\Desktop\Arduino\hardware\tools\avr\lib\gcc\avr\4.8.1\include;$(ProjectDir)..\..\..\..\Users\André\Desktop\Arduino\hardware\tools\avr\lib\gcc\avr\4.9.2\include;$(ProjectDir)..\..\..\..\Users\André\Desktop\Arduino\hardware\tools\avr\lib\gcc\avr\4.9.3\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)..\..\..\..\Users\André\Documents\Arduino\libraries\ArduinoJson-master\src;$(ProjectDir)..\..\..\..\Users\André\Documents\Arduino\libraries\Easyuino\src;$(ProjectDir)..\..\..\..\Users\André\Desktop\Arduino\hardware\arduino\avr\libraries\SoftwareSerial\src;$(ProjectDir)..\..\..\..\Users\André\Desktop\Arduino\hardware\arduino\avr\libraries\Wire\src;$(ProjectDir)..\..\..\..\Users\André\Desktop\Arduino\libraries;$(ProjectDir)..\..\..\..\Users\André\Desktop\Arduino\hardware\arduino\avr\libraries;$(ProjectDir)..\..\..\..\Users\André\Documents\Arduino\libraries;$(ProjectDir)..\..\..\..\Users\André\Desktop\Arduino\hardware\arduino\avr\cores\arduino;$(ProjectDir)..\..\..\..\Users\André\Desktop\Arduino\hardware\arduino\avr\variants\standard;$(ProjectDir)..\MasterController;$(ProjectDir)..\..\..\..\Users\André\Desktop\Arduino\hardware\tools\avr\avr\include\;$(ProjectDir)..\..\..\..\Users\André\Desktop\Arduino\hardware\tools\avr\avr\include\avr\;$(ProjectDir)..\..\..\..\Users\André\Desktop\Arduino\hardware\tools\avr\lib\gcc\avr\4.8.1\include;$(ProjectDir)..\..\..\..\Users\André\Desktop\Arduino\hardware\tools\avr\lib\gcc\avr\4.9.2\include;$(ProjectDir)..\..\..\..\Users\André\Desktop\Arduino\hardware\tools\avr\lib\gcc\avr\4.9.3\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <ForcedIncludeFiles>$(ProjectDir)__vm\.MasterController.vsarduino.h;%(ForcedIncludeFiles)</ForcedIncludeFiles>
       <IgnoreStandardIncludePath>false</IgnoreStandardIncludePath>
       <PreprocessorDefinitions>__AVR_ATmega328p__;__AVR_ATmega328P__;_VMDEBUG=1;F_CPU=16000000L;ARDUINO=10800;ARDUINO_AVR_UNO;ARDUINO_ARCH_AVR;__cplusplus=201103L;_VMICRO_INTELLISENSE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
@@ -100,7 +100,7 @@
   </ImportGroup>
   <ProjectExtensions>
     <VisualStudio>
-      <UserProperties arduino.upload.port="COM6" />
+      <UserProperties arduino.upload.port="COM10" />
     </VisualStudio>
   </ProjectExtensions>
 </Project>

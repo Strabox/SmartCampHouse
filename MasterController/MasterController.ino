@@ -1,8 +1,17 @@
 /*
 Name:		MasterController.ino
 Created:	11/6/2017 1:03:01 PM
-Author:	André
+Author:		André
+
+Arduino UNO pin reservation scheme:
+- Pin 2 used to read the water flow sensor (necessary due to interruptions)
+- Pin 4 used to control the water pump relay
+- Pin 5 used to control the lamp relay
+- Pin 6 used to control the water valve relay
+- Pins 7 (RX) and 8 (TX) used to Serial with the GSM board and pin 9 (Pwoer) used to turn ON/OFF the GSM board
+- Pins 11 (Trigger) and 12 (Echo) used to interact with Ultrasonic Module
 */
+#include <ArduinoJson.h>
 #include <Easyuino.h>
 #include "Tank.h"
 
@@ -10,7 +19,7 @@ Author:	André
 
 // General Configurations
 
-#define DEBUG 1	//Used to control the compilation of debug instructions 0 = FALSE and 1 = TRUE
+#define DEBUG 1	// Used to control the compilation of debug instructions 0 = FALSE and 1 = TRUE
 #define USB_DEBUG_SERIAL_BAUD_RATE 115200
 #define LOOP_DELAY 500
 
@@ -18,24 +27,23 @@ Author:	André
 
 #define ULTRASONIC_SENSOR_HEIGHT_CM 0.0f 
 #define TANK_HEIGHT_CM 60.0f
-#define TANK_MAX_CAPACITY 90
+#define TANK_MAX_CAPACITY 90		// Tank Max Capacity we want maintain (in %)
 
-#define VALVE_NAME "Valve"			// TIGHTLY COUPLED with Android Application
-#define VALVE_PIN 4
+#define VALVE_PIN 6
 
-#define WATER_PUMP_NAME "WaterPump"	// TIGHTLY COUPLED with Android Application
-#define WATER_PUMP_PIN 5
+#define WATER_PUMP_PIN 4
 
-#define ULTRASONIC_ECHO_PIN 13
-#define ULTRASONIC_TRIGGER_PIN 12
+#define WATER_FLOW_SENSOR_PIN 2
+
+#define ULTRASONIC_TRIGGER_PIN 11
+#define ULTRASONIC_ECHO_PIN 12
 
 // Other Devices Configurations
 
 #define GSM_TX_PIN 7
 #define GSM_RX_PIN 8
 
-#define LAMP_NAME "Lamp"			// TIGHTLY COUPLED with Android Application
-#define LAMP_PIN 11
+#define LAMP_PIN 5
 
 #pragma endregion
 
@@ -58,12 +66,14 @@ Author:	André
 using Easyuino::Utilities;
 using Easyuino::GSMService;
 using Easyuino::SMS;
-using Easyuino::RelayNamed;
+using Easyuino::Relay;
 using Domain::Tank;
 
-Tank tank = Tank(VALVE_NAME, VALVE_PIN, WATER_PUMP_NAME, WATER_PUMP_PIN,
-	ULTRASONIC_TRIGGER_PIN, ULTRASONIC_ECHO_PIN, ULTRASONIC_SENSOR_HEIGHT_CM, TANK_HEIGHT_CM, TANK_MAX_CAPACITY);
-RelayNamed lamp = RelayNamed(LAMP_PIN, LAMP_NAME);
+Tank tank = Tank(VALVE_PIN, WATER_PUMP_PIN, ULTRASONIC_TRIGGER_PIN, ULTRASONIC_ECHO_PIN,
+	ULTRASONIC_SENSOR_HEIGHT_CM, TANK_HEIGHT_CM, TANK_MAX_CAPACITY, WATER_FLOW_SENSOR_PIN);
+
+Relay lamp = Relay(LAMP_PIN);
+
 #if (DEBUG) == 1
 	GSMService gsmService = GSMService(GSM_TX_PIN, GSM_RX_PIN, Serial);
 #else
@@ -91,17 +101,28 @@ void loop() {
 #endif
 
 	SMS newSMS;
-	bool newSms = false;
+	bool newSms = true;
 
 	// Important: Calculate the new capacity of the tank
 	tank.updateCapacity();	
+	// Important: This call will verify the tank invariant to see if it is needed take actions
+	tank.checkStatus();
 
 #if (DEBUG) == 1
 	Serial.print(F("Capacity: "));
 	Serial.println(tank.getTankCapacity());
 #endif
 
-	gsmService.availableSMS(newSMS, newSms);
+	if (Serial.available()) {
+		if (Serial.read() == '0') {
+			newSMS.setMessage(SMS_COMMAND_OPEN_WATER_PUMP);
+		}
+		else {
+			newSMS.setMessage(SMS_COMMAND_CLOSE_WATER_PUMP);
+		}
+	}
+
+	//gsmService.availableSMS(newSMS, newSms);
 	if (newSms) {
 		if (strcmp(newSMS.getMessage(), SMS_COMMAND_OPEN_VALVE) == 0) {
 			tank.open();
@@ -122,28 +143,26 @@ void loop() {
 			lamp.turnOff();
 		}
 		else if (strcmp(newSMS.getMessage(), SMS_COMMAND_STATUS_REPORT) == 0) {
-			char* tankManagerString = tank.toString();
-			char* lampToString = lamp.toString();
-			char* messageToSend = NULL;
-			
-			size_t messageToSendSize = strlen(tankManagerString) + strlen(lampToString) + 2;
-			messageToSend = (char*)Utilities::EasyMalloc(sizeof(char) * messageToSendSize);
-			snprintf(messageToSend, messageToSendSize, "%s\n%s", tankManagerString, lampToString);
+			char* bufferTemp = NULL;
+			const size_t bufferSize = JSON_OBJECT_SIZE(4);
+			DynamicJsonBuffer jsonBuffer(bufferSize);
 
-			newSMS.setNumber(newSMS.getNumber());
-			newSMS.setMessage(messageToSend);
-			gsmService.sendSMS(newSMS);
+			JsonObject& root = jsonBuffer.createObject();
+			root["C"] = tank.getTankCapacity();
+			root["V"] = tank.getValveState();
+			root["P"] = tank.getWaterPumpState();
+			root["L"] = lamp.isOn();
 
-			free(tankManagerString);
-			free(lampToString);
-			free(messageToSend);
+			bufferTemp = (char*)Utilities::EasyMalloc(sizeof(char) * root.measureLength());
+
+			newSMS.setMessage(bufferTemp);
+			gsmService.sendSMS(newSMS);		// Reply to the SMS with the system state
+
+			free(bufferTemp);
 		}
 
-		gsmService.deleteAllReadSMS();	//Important: Delete the received SMS to free space
+		//gsmService.deleteAllReadSMS();	//Important: WITH PROBLEMS => Causing Arduino Reset. Delete the received SMS to free space
 	}
-
-	// Important: This call will verify the tank invariant to see if it is needed take actions
-	tank.checkStatus();
 
 #if (DEBUG) == 1
 	Serial.println(F("Loop End"));

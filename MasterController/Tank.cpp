@@ -2,18 +2,14 @@
 
 namespace Domain {
 
-	Tank::Tank(const char* valveName, uint8_t valvePin, const char* waterPumpName, uint8_t waterPumpPin,
-		uint8_t ultrasonicTriggerPin, uint8_t ultrasonicEchoPin, float ultraSonicHeightCM,
-		float tankHeightCM, uint8_t maxCapacity) : Device() {
-		_valve = new RelayNamed(valvePin, valveName);
-		_waterPump = new WaterPump(waterPumpPin, waterPumpName);
+	Tank::Tank(uint8_t valvePin, uint8_t waterPumpPin, uint8_t ultrasonicTriggerPin, uint8_t ultrasonicEchoPin,
+		float ultraSonicHeightCentimeters, float tankHeightCentimeters, uint8_t maxCapacity, uint8_t waterFlowSensorPin) : Device() {
+		_valve = new Relay(valvePin);
+		_waterPump = new WaterPump(waterPumpPin, waterFlowSensorPin);
 		_distanceMeter = new DistanceMeter(ultrasonicTriggerPin, ultrasonicEchoPin);
-		_distanceMeterHeightCM = ultraSonicHeightCM;
-		_tankHeightCM = tankHeightCM;
+		_distanceMeterHeightCentimeters = ultraSonicHeightCentimeters;
+		_tankHeightCentimeters = tankHeightCentimeters;
 		_maxCapacity = maxCapacity;
-
-		_lastMeasureWaterPumpCheck = 0;
-		_lastTimeWaterPumpCheck = 0;
 	}
 
 	Tank::~Tank() {
@@ -43,22 +39,8 @@ namespace Domain {
 			_valve->end();
 			_waterPump->end();
 			_distanceMeter->end();
-			_lastTimeWaterPumpCheck = 0;
-			_lastMeasureWaterPumpCheck = 0;
 			_isInitialized = false;
 		}
-	}
-
-	char* Tank::toString() {
-		char* valveString = _valve->toString();
-		char* waterPumpString = _waterPump->toString();
-		char* res = NULL;
-		size_t resSize = strlen(valveString) + strlen(waterPumpString) + strlen("Capacity:") + 3 + 3;
-		res = (char*)Utilities::EasyMalloc(sizeof(char) * resSize);
-		snprintf(res, resSize, "%s\n%s\n%s%u", valveString, waterPumpString, "Capacity:", getTankCapacity());
-		free(valveString);
-		free(waterPumpString);
-		return res;
 	}
 
 	void Tank::open() {
@@ -76,15 +58,12 @@ namespace Domain {
 	void Tank::startFill() {
 		if (_isInitialized && !_waterPump->isBroken()) {
 			_waterPump->turnOn();
-			_valve->turnOff();
 		}
 	}
 
 	void Tank::stopFill() {
 		if (_isInitialized) {
 			_waterPump->turnOff();
-			_lastTimeWaterPumpCheck = 0;
-			_lastMeasureWaterPumpCheck = 0;
 		}
 	}
 
@@ -96,36 +75,12 @@ namespace Domain {
 
 	void Tank::checkStatus() {
 		if (_isInitialized) {
-
 			_waterPump->isBroken();	// Check if water pump is broken
 
 			// Verify if the tank is at max capacity threshold and turn off the water pump
-			if (getTankCapacity() > _maxCapacity) {
+			if (getTankCapacity() >= _maxCapacity) {
 				_waterPump->turnOff();
 			}
-
-
-			/* My way of indirecting verify the water pump stopped work
-			if(_waterPump->isOn()) {
-				if (_lastTimeWaterPumpCheck == 0) {		// First check after the pump is opened
-					_lastTimeWaterPumpCheck = millis();
-					_lastMeasureWaterPumpCheck = this->getTankCapacity();
-					return;
-				}
-
-				// Time to check if pump is working
-				if ((millis() - _lastTimeWaterPumpCheck) >= TIMEOUT_FOR_TEN_PERCENT) {
-					if ((getTankCapacity() - _lastMeasureWaterPumpCheck) <= 10) {
-						_waterPumpBroken = true;
-						this->stopFill();
-					}
-					else {
-						_lastTimeWaterPumpCheck = millis();
-						_lastMeasureWaterPumpCheck = this->getTankCapacity();
-					}
-				}
-			}
-			*/
 		}
 	}
 
@@ -136,8 +91,8 @@ namespace Domain {
 	}
 
 	unsigned int Tank::getTankCapacity() {
-		float waterHeight = _tankHeightCM - (_distanceMeter->getDistanceCentimeters() - _distanceMeterHeightCM);
-		int tempCapacity = ((int)waterHeight / (int)_tankHeightCM) * 100;
+		float waterHeight = _tankHeightCentimeters - (_distanceMeter->getDistanceCentimeters() - _distanceMeterHeightCentimeters);
+		int tempCapacity = (int)((waterHeight / _tankHeightCentimeters) * 100);
 		if (tempCapacity <= 0) {
 			tempCapacity = 0;
 		}
@@ -145,6 +100,29 @@ namespace Domain {
 			tempCapacity = 100;
 		}
 		return tempCapacity;
+	}
+
+	uint8_t Tank::getWaterPumpState() {
+		if (_waterPump->isBroken()) {
+			return 3;
+		}
+		else {
+			if (_waterPump->isOn()) {
+				return 1;
+			}
+			else {
+				return 0;
+			}
+		}
+	}
+
+	uint8_t Tank::getValveState() {
+		if (_valve->isOn()) {
+			return 1;
+		}
+		else {
+			return 0;
+		}
 	}
 
 };

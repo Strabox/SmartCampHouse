@@ -9,7 +9,7 @@ Tank.h
 
 using Easyuino::Utilities;
 using Easyuino::Device;
-using Easyuino::RelayNamed;
+using Easyuino::Relay;
 using Easyuino::DistanceMeter;
 
 //#define TIMEOUT_FOR_TEN_PERCENT 600000 // 10 minutes
@@ -19,35 +19,27 @@ namespace Domain {
 	class Tank : public Device {
 
 	private:
-		RelayNamed* _valve;
+		Relay* _valve;
 		WaterPump* _waterPump;
 		DistanceMeter* _distanceMeter;
 
 		/* Distance from the Ultrasonic Sensor to the top of the tank */
-		float _distanceMeterHeightCM;
+		float _distanceMeterHeightCentimeters;
 		/* The height of the tank */
-		float _tankHeightCM;
+		float _tankHeightCentimeters;
 
 		/* Capacity threshold to automatically stop filling */
 		uint8_t _maxCapacity;
 
-		/* Last time we started checking for water pump function (Milliseconds) */
-		unsigned long _lastTimeWaterPumpCheck;
-		/* Capacity of the tank at lastTimeWaterPumpCheck (% Percentage) */
-		unsigned int _lastMeasureWaterPumpCheck;
-
 	public:
-		Tank(const char* valveName, uint8_t valvePin, const char* waterPumpName, uint8_t waterPumpPin,
-			uint8_t ultrasonicTriggerPin, uint8_t ultrasonicEchoPin, float ultraSonicHeightCM,
-			float tankHeightCM, uint8_t maxCapacity);
+		Tank(uint8_t valvePin, uint8_t waterPumpPin, uint8_t ultrasonicTriggerPin, uint8_t ultrasonicEchoPin,
+			float ultraSonicHeightCentimeters, float tankHeightCentimeters, uint8_t maxCapacity, uint8_t waterFlowSensorPin);
 
 		~Tank();
 
 		bool begin();
 
 		void end();
-
-		char* toString();
 
 		void open();
 
@@ -64,6 +56,10 @@ namespace Domain {
 		void updateCapacity();
 
 		unsigned int getTankCapacity();
+
+		uint8_t getWaterPumpState();
+
+		uint8_t getValveState();
 
 	};
 
