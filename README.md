@@ -12,4 +12,5 @@ This project consist in developing a remote system to manage a water tank and fi
 ## Libraries Used
 
 The project is powered by:
-* [Easyuino Library](https://github.com/Strabox/Easyuino) that I have developed too where I hide the complexity of each sensor/device/module to write simple and objective code in this project.
+* [Easyuino](https://github.com/Strabox/Easyuino) that I have developed too where I hide the complexity of each sensor/device/module to write simple and objective code in this project.
+* [ArduinoJson](https://github.com/bblanchon/ArduinoJson) to serialize data from the Android applciation to the arduino and vice-versa.
