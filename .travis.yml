@@ -8,6 +8,10 @@ before_install:
   # Download Easyuino library from github master branch
   - wget https://github.com/Strabox/Easyuino/archive/master.zip
   - unzip master.zip
+  - rm master.zip
+  # Download Arduino Json library from github master branch
+  - wget https://github.com/bblanchon/ArduinoJson/archive/master.zip
+  - unzip master.zip
 install:
   - ln -s $PWD/Easyuino-master /usr/local/share/arduino/libraries/Easyuino
 script:
