@@ -19,9 +19,11 @@ Arduino UNO pin reservation scheme:
 
 // General Configurations
 
-#define DEBUG 1	// Used to control the compilation of debug instructions 0 = FALSE and 1 = TRUE
+#define DEBUG 1		// Used to control the compilation of debug instructions
 #define USB_DEBUG_SERIAL_BAUD_RATE 115200
 #define LOOP_DELAY 500
+
+#define ALLOWED_PHONE_NUMER_1 99999999
 
 // Tank Configurations
 
@@ -29,19 +31,20 @@ Arduino UNO pin reservation scheme:
 #define TANK_HEIGHT_CM 60.0f
 #define TANK_MAX_CAPACITY 90		// Tank Max Capacity we want maintain (in %)
 
+#define ULTRASONIC_TRIGGER_PIN 11
+#define ULTRASONIC_ECHO_PIN 12
+
 #define VALVE_PIN 6
 
 #define WATER_PUMP_PIN 4
 
 #define WATER_FLOW_SENSOR_PIN 2
 
-#define ULTRASONIC_TRIGGER_PIN 11
-#define ULTRASONIC_ECHO_PIN 12
-
 // Other Devices Configurations
 
 #define GSM_TX_PIN 7
 #define GSM_RX_PIN 8
+#define GSM_POWER_PIN 9
 
 #define LAMP_PIN 5
 
@@ -64,7 +67,7 @@ Arduino UNO pin reservation scheme:
 #pragma endregion
 
 using Easyuino::Utilities;
-using Easyuino::GSMService;
+using Easyuino::GSMServiceSecure;
 using Easyuino::SMS;
 using Easyuino::Relay;
 using Domain::Tank;
@@ -75,9 +78,9 @@ Tank tank = Tank(VALVE_PIN, WATER_PUMP_PIN, ULTRASONIC_TRIGGER_PIN, ULTRASONIC_E
 Relay lamp = Relay(LAMP_PIN);
 
 #if (DEBUG) == 1
-	GSMService gsmService = GSMService(GSM_TX_PIN, GSM_RX_PIN, Serial);
+	GSMServiceSecure gsmService = GSMServiceSecure(GSM_TX_PIN, GSM_RX_PIN, GSM_POWER_PIN, Serial);
 #else
-	GSMService gsmService = GSMService(GSM_TX_PIN, GSM_RX_PIN);
+	GSMServiceSecure gsmService = GSMServiceSecure(GSM_TX_PIN, GSM_RX_PIN, GSM_POWER_PIN);
 #endif
 
 void setup() {
@@ -87,7 +90,10 @@ void setup() {
 #endif
 
 	tank.begin();
+
 	gsmService.begin(GSM_DEFAULT_BAUD_RATE);
+	gsmService.turnOn();
+	gsmService.addAllowedNumber(ALLOWED_PHONE_NUMER_1);	// WARNING: Careful when testing see if the phone number is right!
 	gsmService.beginListenForSMS();
 
 #if (DEBUG) == 1
@@ -101,11 +107,9 @@ void loop() {
 #endif
 
 	SMS newSMS;
-	bool newSms = true;
+	bool newSms = false;
 
-	// Important: Calculate the new capacity of the tank
-	tank.updateCapacity();	
-	// Important: This call will verify the tank invariant to see if it is needed take actions
+	// Important: This call will verify the tank invariants to see if it is needed take safety actions.
 	tank.checkStatus();
 
 #if (DEBUG) == 1
@@ -113,17 +117,9 @@ void loop() {
 	Serial.println(tank.getTankCapacity());
 #endif
 
-	if (Serial.available()) {
-		if (Serial.read() == '0') {
-			newSMS.setMessage(SMS_COMMAND_OPEN_WATER_PUMP);
-		}
-		else {
-			newSMS.setMessage(SMS_COMMAND_CLOSE_WATER_PUMP);
-		}
-	}
-
-	//gsmService.availableSMS(newSMS, newSms);
+	gsmService.availableSMS(newSMS, newSms);
 	if (newSms) {
+		Serial.println(newSMS.getMessage());
 		if (strcmp(newSMS.getMessage(), SMS_COMMAND_OPEN_VALVE) == 0) {
 			tank.open();
 		}
@@ -161,7 +157,7 @@ void loop() {
 			free(bufferTemp);
 		}
 
-		//gsmService.deleteAllReadSMS();	//Important: WITH PROBLEMS => Causing Arduino Reset. Delete the received SMS to free space
+		gsmService.deleteAllReadSMS();	//Important: Delete the received SMS to free space
 	}
 
 #if (DEBUG) == 1

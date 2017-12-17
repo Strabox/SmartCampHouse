@@ -75,18 +75,14 @@ namespace Domain {
 
 	void Tank::checkStatus() {
 		if (_isInitialized) {
+			_distanceMeter->updateDistance();	// TODO: Verify how non-block performs in reality
+
 			_waterPump->isBroken();	// Check if water pump is broken
 
 			// Verify if the tank is at max capacity threshold and turn off the water pump
 			if (getTankCapacity() >= _maxCapacity) {
 				_waterPump->turnOff();
 			}
-		}
-	}
-
-	void Tank::updateCapacity() {
-		if (_isInitialized) {
-			_distanceMeter->updateDistance();	// TODO: Verify how non-block performs in reality
 		}
 	}
 

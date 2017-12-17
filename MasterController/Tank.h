@@ -12,8 +12,6 @@ using Easyuino::Device;
 using Easyuino::Relay;
 using Easyuino::DistanceMeter;
 
-//#define TIMEOUT_FOR_TEN_PERCENT 600000 // 10 minutes
-
 namespace Domain {
 
 	class Tank : public Device {
@@ -52,8 +50,6 @@ namespace Domain {
 		void fixWaterPump();
 
 		void checkStatus();
-
-		void updateCapacity();
 
 		unsigned int getTankCapacity();
 
